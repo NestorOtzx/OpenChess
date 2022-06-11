@@ -6,11 +6,14 @@ public class BoardGenerator : MonoBehaviour
 {
     public GameObject whiteSquarePref, blackSquarePref;
 
-    public int boardLenghtX = 8;
-    public int boardLenghtY = 8;
+    int boardLenghtX;
+    int boardLenghtY;
 
     void Awake()
     {
+        boardLenghtX = GameManager.instance.boardX;
+        boardLenghtY = GameManager.instance.boardY;
+
         GenerateBoard();
     }
 
