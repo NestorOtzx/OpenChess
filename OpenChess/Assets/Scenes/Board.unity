@@ -333,6 +333,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteSquarePref: {fileID: 8484974710480635640, guid: 63e5994339778cf42a3ce07721789125, type: 3}
   blackSquarePref: {fileID: 8484974710480635640, guid: e21899048173a0c4e8b114606707f6b5, type: 3}
+  boardLenghtX: 8
+  boardLenghtY: 8
 --- !u!4 &1916576099
 Transform:
   m_ObjectHideFlags: 0
@@ -360,15 +362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31277ecea7a1d604bbae3cefcb6ecdb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesToGenerate:
-  - position: 0
-    type: 0
-  - position: 1
-    type: 0
-  - position: 2
-    type: 0
-  - position: 3
-    type: 0
+  piecesPrefs:
+  - {fileID: 3131934933694353515, guid: 668d73ed908485f48a59fda85e6f355d, type: 3}
+  generatorIndications: 
 --- !u!1 &2118367694
 GameObject:
   m_ObjectHideFlags: 0
