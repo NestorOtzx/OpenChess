@@ -360,8 +360,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31277ecea7a1d604bbae3cefcb6ecdb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesPrefs:
+  whitePieces:
   - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
+  blackPieces:
+  - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
   generatorIndications: 
 --- !u!1 &2118367694
 GameObject:
