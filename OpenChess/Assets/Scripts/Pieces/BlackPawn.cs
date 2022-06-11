@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class BlackPawn : WhitePawn
 {
-    public override void SetWhiteAvailableSquares()
+    public override void SetAvailableSquares()
     {
-        int position = currentSquare.squareID;
-        List<Square> squares = GameManager.instance.boardSquares;
+        Square[,] squares = GameManager.boardGenerator.squares;
+        Vector2Int pos = currentSquare.squarePos;
 
-        Debug.Log(position - GameManager.instance.boardX);
+        AvailableSquare(squares[pos.x, pos.y - 1]);
 
-        squares[position - GameManager.instance.boardX].isAvailable = true;
-    }
-
-    protected override void UnavailableSquares()
-    {
-        int position = currentSquare.squareID;
-        List<Square> squares = GameManager.instance.boardSquares;
-
-        if (movedTwice)
+        if (firstMove)
         {
-            squares[position - 2 * GameManager.instance.boardX].isAvailable = false;
+            try
+            {
+                AvailableSquare(squares[pos.x, pos.y - 2]);
+            }
+            catch
+            {
+                //Do nothing
+            }
         }
-
-        squares[position - GameManager.instance.boardX].isAvailable = false;
     }
 
 }

@@ -6,32 +6,44 @@ public class BoardGenerator : MonoBehaviour
 {
     public GameObject whiteSquarePref, blackSquarePref;
 
-    int boardLenghtX;
-    int boardLenghtY;
+    public Square [,]squares;
+
+    public int boardLenghtX;
+    public int boardLenghtY;
 
     void Awake()
     {
-        boardLenghtX = GameManager.instance.boardX;
-        boardLenghtY = GameManager.instance.boardY;
+        squares = new Square[boardLenghtX, boardLenghtY];
 
         GenerateBoard();
+
+        for (int i = 0; i<boardLenghtY; i++)
+        {
+            for (int j = 0; j<boardLenghtX; j++)
+            {
+                Debug.Log(squares[i, j]);
+            }
+        }
+        
     }
 
     private void GenerateBoard()
     {
         GameObject currentSquare = blackSquarePref;
 
-        for (int i = 0; i<boardLenghtY; i++)
-        {
-            for(int j = 0; j<boardLenghtX; j++)
-            {
-                Instantiate(currentSquare, new Vector2(j, i), Quaternion.identity, transform);
 
+        for (int y = 0; y < boardLenghtY; y++)
+        {
+            for (int x = 0; x < boardLenghtX; x++)
+            {
+                squares[x, y] = Instantiate(currentSquare, new Vector2(x, y), Quaternion.identity, transform).GetComponent<Square>();
+                squares[x, y].squarePos = new Vector2Int(x, y);
+                
                 //if its the last iteration dont change color of squares
-                if (j==boardLenghtX-1){
+                if (x == boardLenghtX - 1)
+                {
                     break;
                 }
-
                 //Switch color of squares
                 if (currentSquare == blackSquarePref)
                 {

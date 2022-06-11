@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<Square> boardSquares = new List<Square>();
-
     public static GameManager instance;
 
-    public int boardX;
-    public int boardY;
+    public static BoardGenerator boardGenerator;
 
 
     private void Awake()
     {
         instance = this;
+        boardGenerator = FindObjectOfType<BoardGenerator>(false);
     }
 
 }

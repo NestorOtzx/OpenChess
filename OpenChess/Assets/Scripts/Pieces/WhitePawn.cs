@@ -6,53 +6,31 @@ public class WhitePawn : Piece
 {
     
     protected bool firstMove = true;
-    protected bool movedTwice = false;
-    public override void SetWhiteAvailableSquares()
+
+    public override void SetAvailableSquares()
     {
-        int position = currentSquare.squareID;
-        List<Square> squares = GameManager.instance.boardSquares;
+        Square[,] squares = GameManager.boardGenerator.squares;
+        Vector2Int pos = currentSquare.squarePos;
+
+        AvailableSquare(squares[pos.x, pos.y + 1]);
 
         if (firstMove)
         {
-            squares[position + 2*GameManager.instance.boardX].isAvailable = true;
-            movedTwice = true;
+            try
+            {
+                AvailableSquare(squares[pos.x, pos.y + 2]);
+            }
+            catch
+            {
+                //Do nothing
+            }
         }
-
-        squares[position + GameManager.instance.boardX].isAvailable = true;
     }
 
-    protected override void UnavailableSquares()
+    protected override void OnPieceMoved(Square _square)
     {
-        int position = currentSquare.squareID;
-        List<Square> squares = GameManager.instance.boardSquares;
-
-        if (movedTwice)
-        {
-            squares[position + 2 * GameManager.instance.boardX].isAvailable = false;
-        }
-        
-        squares[position + GameManager.instance.boardX].isAvailable = false;
+        base.OnPieceMoved(_square);
+        firstMove = false;
     }
 
-    public override void OnBeingDropped(Square squareDroped)
-    {
-        bool auxSquareDropedAv = squareDroped.isAvailable;
-
-        //Disable all avaiblable squares
-        UnavailableSquares();
-
-        if (squareDroped != null && auxSquareDropedAv && !squareDroped.isOcuped)
-        {
-            
-            currentSquare.isOcuped = false;
-            currentSquare = squareDroped;
-            currentSquare.isOcuped = true;
-            firstMove = false;
-            movedTwice = false;
-        }
-        
-
-        transform.position = currentSquare.transform.position;
-        transform.parent = currentSquare.transform;
-    }
 }

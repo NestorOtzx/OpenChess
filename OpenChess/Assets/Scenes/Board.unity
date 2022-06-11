@@ -333,6 +333,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteSquarePref: {fileID: 8484974710480635640, guid: 63e5994339778cf42a3ce07721789125, type: 3}
   blackSquarePref: {fileID: 8484974710480635640, guid: e21899048173a0c4e8b114606707f6b5, type: 3}
+  boardLenghtX: 8
+  boardLenghtY: 8
 --- !u!4 &1916576099
 Transform:
   m_ObjectHideFlags: 0
@@ -395,9 +397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420f509db5b911447999e009e994bcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardSquares: []
-  boardX: 8
-  boardY: 8
 --- !u!4 &2118367696
 Transform:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class DragPiecesManager : MonoBehaviour
 
                     currentPiece.OnBeingDropped(currentSquare);
                 }
-                else //There is no piece under the cursor
+                else //There is no square under the cursor
                 {
                     currentPiece.OnBeingDropped(null);
                 }

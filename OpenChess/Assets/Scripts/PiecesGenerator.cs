@@ -26,17 +26,20 @@ public class PiecesGenerator : MonoBehaviour
 
     public void GenerateWhitePieces()
     {
-        for (int j = 0; j < 8; j++)
+        for (int x = 0; x < 8; x++)
         {
-            Instantiate(GetWhitePiece(TypeOfPiece.Pawn), new Vector2(j, 0), Quaternion.identity, GameManager.instance.boardSquares[j].transform);
+            Instantiate(GetWhitePiece(TypeOfPiece.Pawn), GameManager.boardGenerator.squares[x, 0].transform);
+
         }
+
     }
 
     public void GenerateBlackPieces()
     {
-        for (int j = 0; j < 8; j++)
+        for (int x = 0; x < 8; x++)
         {
-            Instantiate(GetBlackPiece(TypeOfPiece.Pawn), new Vector2(j, 7), Quaternion.identity, GameManager.instance.boardSquares[j+7*GameManager.instance.boardX].transform);
+            Instantiate(GetBlackPiece(TypeOfPiece.Pawn), GameManager.boardGenerator.squares[x, 7].transform);
+
         }
     }
     GameObject GetBlackPiece(TypeOfPiece type)

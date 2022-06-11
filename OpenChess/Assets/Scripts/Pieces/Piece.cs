@@ -12,41 +12,66 @@ public class Piece : MonoBehaviour
 {
     protected Square currentSquare;
 
+    List<Square> availableSquares = new List<Square>();
+
     private void Start()
     {
         currentSquare = transform.parent.GetComponent<Square>();
         currentSquare.isOcuped = true;
     }
 
-    public virtual void SetWhiteAvailableSquares()
+    public virtual void SetAvailableSquares()
     {
-        int position = currentSquare.squareID;
-        List<Square> squares = GameManager.instance.boardSquares;
+        Square[,] squares = GameManager.boardGenerator.squares;
+        Vector2Int pos = currentSquare.squarePos;
 
-        squares[position + GameManager.instance.boardX].isAvailable = true;
+        AvailableSquare(squares[pos.x, pos.y + 1]);
     }
 
-    protected virtual void UnavailableSquares()
+    protected void AvailableSquare(Square _square)
     {
-     
+        _square.isAvailable = true;
+        availableSquares.Add(_square);
     }
 
+    public virtual void UnavialableSquares()
+    {
+        for (int i = 0; i<availableSquares.Count; i++)
+        {
+            availableSquares[i].isAvailable = false;
+            availableSquares.Remove(availableSquares[i]);
+        }
+    }
+    
     public virtual void OnBeingGrabbed()
     {
-        SetWhiteAvailableSquares();
+        SetAvailableSquares();
     }
 
     public virtual void OnBeingDropped(Square squareDroped)
     {
-        if (squareDroped != null && squareDroped.isAvailable && !squareDroped.isOcuped)
+        //avoid to lose this information before UnavailableSquares()
+        bool availableAux = false;
+        if (squareDroped)
+            availableAux= squareDroped.isAvailable;
+
+        UnavialableSquares();
+
+        if (squareDroped != null && availableAux && !squareDroped.isOcuped)
         {
-            currentSquare.isOcuped = false;
-            currentSquare = squareDroped;
-            currentSquare.isOcuped = true;
+            OnPieceMoved(squareDroped);
         }
         
         transform.position = currentSquare.transform.position;
         transform.parent = currentSquare.transform;
     }
+
+    protected virtual void OnPieceMoved(Square _square)
+    {
+        currentSquare.isOcuped = false;
+        currentSquare = _square;
+        currentSquare.isOcuped = true;
+    }
+
 
 }
