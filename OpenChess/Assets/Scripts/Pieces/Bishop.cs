@@ -9,74 +9,38 @@ public class Bishop : Piece
         Square[,] squares = GameManager.boardGenerator.squares;
         Vector2Int pos = currentSquare.squarePos;
 
-        //Available to:
-        int x = pos.x;
-        int y = pos.y;
+        Vector2Int []modifiers = new Vector2Int[4];
 
+        //This sets all directions
+        modifiers[0] = new Vector2Int(1, 1);
+        modifiers[1] = new Vector2Int(1, -1);
+        modifiers[2] = new Vector2Int(-1, 1);
+        modifiers[3] = new Vector2Int(-1, -1);
 
-        //UP-RIGHT
-        while(true)
+        for (int i = 0; i<modifiers.Length; i++)
         {
-            x++;
-            y++;
+            int x = pos.x;
+            int y = pos.y;
 
-
-
-            AvailableSquare(squares[x, y]);
-            if (x >= squares.GetLength(0)-1 || y >= squares.GetLength(1)-1)
+            while (true)
             {
-                break;
+                x += modifiers[i].x;
+                y += modifiers[i].y;
+
+                if (x >= 0 && y >= 0 && x < squares.GetLength(0) && y < squares.GetLength(1))
+                {
+                    AvailableSquare(squares[x, y]);
+
+                    if (squares[x, y].isOcuped)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
         }
-
-        x = pos.x;
-        y = pos.y;
-
-        //UP-LEFT
-        while (true)
-        {
-
-            Debug.Log(x + "| " + y);
-
-            AvailableSquare(squares[x, y]);
-            if (x < 1 || y >= squares.GetLength(1)-1)
-            {
-                break;
-            }
-
-        }
-
-        x = pos.x;
-        y = pos.y;
-
-        //Down-Right
-        while (true)
-        {
-            x++;
-            y--;
-
-            AvailableSquare(squares[x, y]);
-            if (x >= squares.GetLength(0)-1 || y < 1)
-            {
-                break;
-            }
-        }
-
-        x = pos.x;
-        y = pos.y;
-
-        //Down-left
-        while (true)
-        {
-            x--;
-            y--;
-
-            AvailableSquare(squares[x, y]);
-            if (x < 1 || y < 1)
-            {
-                break;
-            }
-        }
-
     }
 }

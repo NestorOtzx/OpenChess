@@ -33,13 +33,13 @@ public class WhitePawn : Piece
             {
                 AvailableSquare(squares[pos.x-1, pos.y + 1]);
             }
+
         }catch
         {
             //Nothing
         }
         
     }
-
 
 
     protected override void OnPieceMoved(Square _square)

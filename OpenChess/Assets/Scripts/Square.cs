@@ -7,5 +7,5 @@ public class Square : MonoBehaviour
     public bool isOcuped;
     public bool isAvailable = false;
     public Vector2Int squarePos;
-
+    public Piece currentPiece;
 }

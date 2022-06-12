@@ -25,6 +25,7 @@ public class Piece : MonoBehaviour
     {
         currentSquare = transform.parent.GetComponent<Square>();
         currentSquare.isOcuped = true;
+        currentSquare.currentPiece = this;
     }
 
     public virtual void SetAvailableSquares()
@@ -53,8 +54,9 @@ public class Piece : MonoBehaviour
         for (int i = 0; i<availableSquares.Count; i++)
         {
             availableSquares[i].isAvailable = false;
-            availableSquares.Remove(availableSquares[i]);
         }
+
+        availableSquares.Clear();
     }
     
     public virtual void OnBeingGrabbed()
@@ -93,19 +95,25 @@ public class Piece : MonoBehaviour
     {
         transform.position = currentSquare.transform.position;
         transform.parent = currentSquare.transform;
+        currentSquare.currentPiece = this;
     }
 
     protected virtual bool Capture(Square _square)
     {
 
-        Piece pieceToKill = _square.GetComponentInChildren<Piece>();
+        Piece pieceToKill = _square.currentPiece;
         if (pieceToKill && pieceToKill.team != team)
         {
-            
+            pieceToKill.OnBeingCaptured();
             Destroy(pieceToKill.gameObject);
             return true;
         }
         return false;
+    }
+
+    public virtual void OnBeingCaptured()
+    {
+        currentSquare.currentPiece = null;
     }
 
     protected virtual void OnPieceMoved(Square _square)
