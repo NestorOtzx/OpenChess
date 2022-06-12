@@ -40,6 +40,8 @@ public class WhitePawn : Piece
         
     }
 
+
+
     protected override void OnPieceMoved(Square _square)
     {
         base.OnPieceMoved(_square);

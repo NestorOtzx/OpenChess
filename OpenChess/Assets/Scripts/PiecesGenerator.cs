@@ -26,20 +26,31 @@ public class PiecesGenerator : MonoBehaviour
 
     public void GenerateWhitePieces()
     {
-        for (int x = 0; x < 8; x++)
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.Rook, new Vector2Int(0, 0));
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.Rook, new Vector2Int(7, 0));
+
+        for (int x = 2; x < 6; x++)
         {
-            Instantiate(GetWhitePiece(TypeOfPiece.Pawn), GameManager.boardGenerator.squares[x, 0].transform);
-
+            CreatePiece(TeamOfPiece.White, TypeOfPiece.Pawn, new Vector2Int(x, 1));
         }
+    }
 
+    void CreatePiece(TeamOfPiece team, TypeOfPiece type, Vector2Int position)
+    {
+        if (team == TeamOfPiece.White)
+            Instantiate(GetWhitePiece(type), GameManager.boardGenerator.squares[position.x, position.y].transform);
+        else
+            Instantiate(GetBlackPiece(type), GameManager.boardGenerator.squares[position.x, position.y].transform);
     }
 
     public void GenerateBlackPieces()
     {
-        for (int x = 0; x < 8; x++)
-        {
-            Instantiate(GetBlackPiece(TypeOfPiece.Pawn), GameManager.boardGenerator.squares[x, 7].transform);
+        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Rook, new Vector2Int(0, 7));
+        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Rook, new Vector2Int(7, 7));
 
+        for (int x = 2; x < 6; x++)
+        {
+            CreatePiece(TeamOfPiece.Black, TypeOfPiece.Pawn, new Vector2Int(x, 6));
         }
     }
     GameObject GetBlackPiece(TypeOfPiece type)

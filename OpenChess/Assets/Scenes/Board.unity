@@ -364,7 +364,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whitePieces:
   - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
+  - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
+  - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
+  - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
+  - {fileID: 3131934933694353515, guid: d8b0e19d7afdef6438bcbd413b02ce8b, type: 3}
+  - {fileID: 3131934933694353515, guid: 7e2f790e987093e43bd613c46e4b79db, type: 3}
   blackPieces:
+  - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
+  - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
+  - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
+  - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
+  - {fileID: 3131934933694353515, guid: 87db75b666461b148b2db1c433a9c6d5, type: 3}
   - {fileID: 3131934933694353515, guid: 3c70aeb38ce67924c8388aed5716191c, type: 3}
   generatorIndications: 
 --- !u!1 &2118367694

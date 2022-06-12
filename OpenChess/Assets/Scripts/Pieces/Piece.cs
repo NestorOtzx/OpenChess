@@ -32,7 +32,14 @@ public class Piece : MonoBehaviour
         Square[,] squares = GameManager.boardGenerator.squares;
         Vector2Int pos = currentSquare.squarePos;
 
-        AvailableSquare(squares[pos.x, pos.y + 1]);
+        try
+        {
+            AvailableSquare(squares[pos.x, pos.y + 1]);
+        }
+        catch
+        {
+            //Do NOTHING
+        }
     }
 
     protected void AvailableSquare(Square _square)
@@ -41,7 +48,7 @@ public class Piece : MonoBehaviour
         availableSquares.Add(_square);
     }
 
-    public virtual void UnavialableSquares()
+    public virtual void UnavailableSquares()
     {
         for (int i = 0; i<availableSquares.Count; i++)
         {
@@ -62,29 +69,43 @@ public class Piece : MonoBehaviour
         if (squareDroped)
             availableAux= squareDroped.isAvailable;
 
-        UnavialableSquares();
+        UnavailableSquares();
+
+        if (squareDroped == currentSquare)
+        {
+            PutPieceOnBoard();
+            return;
+        }
 
         if (squareDroped != null && availableAux)
         {
-            if (squareDroped.isOcuped)
+            //If the piece is free or you can capture
+            if (!squareDroped.isOcuped || (squareDroped.isOcuped && Capture(squareDroped)))
             {
-                Capture(squareDroped);
+                OnPieceMoved(squareDroped);
             }
-
-            OnPieceMoved(squareDroped);
         }
-        
+
+        PutPieceOnBoard();
+    }
+
+    protected void PutPieceOnBoard()
+    {
         transform.position = currentSquare.transform.position;
         transform.parent = currentSquare.transform;
     }
 
-    protected virtual void Capture(Square _square)
+    protected virtual bool Capture(Square _square)
     {
+
         Piece pieceToKill = _square.GetComponentInChildren<Piece>();
-        if (pieceToKill)
+        if (pieceToKill && pieceToKill.team != team)
         {
+            
             Destroy(pieceToKill.gameObject);
+            return true;
         }
+        return false;
     }
 
     protected virtual void OnPieceMoved(Square _square)
