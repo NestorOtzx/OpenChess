@@ -7,11 +7,8 @@ public class WhitePawn : Piece
     
     protected bool firstMove = true;
 
-    public override void SetAvailableSquares()
+    public override void SetAvailableSquares(ref Square[,] squares, Vector2Int pos)
     {
-        Square[,] squares = GameManager.boardGenerator.squares;
-        Vector2Int pos = currentSquare.squarePos;
-
         try
         {
             if (!squares[pos.x, pos.y + 1].isOcuped)

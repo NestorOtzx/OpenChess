@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3131934933694353512}
   - component: {fileID: 3131934933694353513}
   - component: {fileID: 3131934933694353518}
-  - component: {fileID: 8157813566166051129}
+  - component: {fileID: -8360360986515028374}
   m_Layer: 3
-  m_Name: BlackQueen
+  m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: -975016795
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ca905c9b0df69c448139fd1a00db19b, type: 3}
-  m_Color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 103087ff4da952843b64271fe284ab7b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8157813566166051129
+--- !u!114 &-8360360986515028374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3131934933694353515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf96c895c6cf784ab00114eb9333086, type: 3}
+  m_Script: {fileID: 11500000, guid: 34c865f3227750e4fb947a2438793423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 1
+  team: 0

@@ -28,11 +28,8 @@ public class Piece : MonoBehaviour
         currentSquare.currentPiece = this;
     }
 
-    public virtual void SetAvailableSquares()
+    public virtual void SetAvailableSquares(ref Square [,] squares, Vector2Int pos)
     {
-        Square[,] squares = GameManager.boardGenerator.squares;
-        Vector2Int pos = currentSquare.squarePos;
-
         try
         {
             AvailableSquare(squares[pos.x, pos.y + 1]);
@@ -61,7 +58,9 @@ public class Piece : MonoBehaviour
     
     public virtual void OnBeingGrabbed()
     {
-        SetAvailableSquares();
+        Square[,] squares = GameManager.boardGenerator.squares;
+        Vector2Int pos = currentSquare.squarePos;
+        SetAvailableSquares(ref squares, pos);
     }
 
     public virtual void OnBeingDropped(Square squareDroped)

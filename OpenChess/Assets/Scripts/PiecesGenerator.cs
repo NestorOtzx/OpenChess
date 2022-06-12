@@ -34,11 +34,22 @@ public class PiecesGenerator : MonoBehaviour
         CreatePiece(TeamOfPiece.White, TypeOfPiece.Bishop, new Vector2Int(2, 0));
         CreatePiece(TeamOfPiece.White, TypeOfPiece.Bishop, new Vector2Int(5, 0));
 
+
+
+        //Knights
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.Knight, new Vector2Int(1, 0));
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.Knight, new Vector2Int(6, 0));
+
+        //King
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.King, new Vector2Int(3, 0));
+
         //Queen
-        //CreatePiece(TeamOfPiece.White, TypeOfPiece.Queen, new Vector2Int(4, 0));
+        CreatePiece(TeamOfPiece.White, TypeOfPiece.Queen, new Vector2Int(4, 0));
+
+        
 
         //Pawns
-        for (int x = 2; x < 6; x++)
+        for (int x = 0; x < 8; x++)
         {
             CreatePiece(TeamOfPiece.White, TypeOfPiece.Pawn, new Vector2Int(x, 1));
         }
@@ -63,10 +74,10 @@ public class PiecesGenerator : MonoBehaviour
         CreatePiece(TeamOfPiece.Black, TypeOfPiece.Bishop, new Vector2Int(5, 7));
 
         //Queen
-        //CreatePiece(TeamOfPiece.Black, TypeOfPiece.Queen, new Vector2Int(4, 7));
+        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Queen, new Vector2Int(4, 7));
 
         //Pawns
-        for (int x = 2; x < 6; x++)
+        for (int x = 0; x < 7; x++)
         {
             CreatePiece(TeamOfPiece.Black, TypeOfPiece.Pawn, new Vector2Int(x, 6));
         }
