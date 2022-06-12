@@ -30,7 +30,7 @@ public class BoardGenerator : MonoBehaviour
     private void GenerateBoard()
     {
         GameObject currentSquare = blackSquarePref;
-
+        
 
         for (int y = 0; y < boardLenghtY; y++)
         {

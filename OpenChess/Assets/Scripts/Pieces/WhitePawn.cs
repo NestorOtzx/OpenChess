@@ -12,19 +12,32 @@ public class WhitePawn : Piece
         Square[,] squares = GameManager.boardGenerator.squares;
         Vector2Int pos = currentSquare.squarePos;
 
-        AvailableSquare(squares[pos.x, pos.y + 1]);
-
-        if (firstMove)
+        try
         {
-            try
+            if (!squares[pos.x, pos.y + 1].isOcuped)
             {
-                AvailableSquare(squares[pos.x, pos.y + 2]);
+                AvailableSquare(squares[pos.x, pos.y + 1]);
+
+                if (firstMove)
+                {
+                    AvailableSquare(squares[pos.x, pos.y + 2]);
+                }    
             }
-            catch
+            
+            //This allows the pawn to capture pieces diagonally
+            if (squares[pos.x+1, pos.y + 1].isOcuped)
             {
-                //Do nothing
+                AvailableSquare(squares[pos.x+1, pos.y + 1]);
             }
+            if (squares[pos.x-1, pos.y + 1].isOcuped)
+            {
+                AvailableSquare(squares[pos.x-1, pos.y + 1]);
+            }
+        }catch
+        {
+            //Nothing
         }
+        
     }
 
     protected override void OnPieceMoved(Square _square)
