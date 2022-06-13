@@ -32,5 +32,7 @@ public class Knight : Piece
             if (x >= 0 && y >= 0 && x < squares.GetLength(0) && y < squares.GetLength(1))
                 AvailableSquare(squares[x, y]);
         }
+
+        
     }
 }

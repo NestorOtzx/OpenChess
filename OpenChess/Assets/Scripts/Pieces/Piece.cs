@@ -8,7 +8,7 @@ public enum TypeOfPiece
     Pawn, King, Queen, Knight, Rook, Bishop
 }
 
-public enum TeamOfPiece
+public enum Team
 {
     White, Black
 }
@@ -19,7 +19,7 @@ public class Piece : MonoBehaviour
 
     List<Square> availableSquares = new List<Square>();
 
-    public TeamOfPiece team;
+    public Team team;
 
     private void Start()
     {
@@ -60,7 +60,10 @@ public class Piece : MonoBehaviour
     {
         Square[,] squares = GameManager.boardGenerator.squares;
         Vector2Int pos = currentSquare.squarePos;
-        SetAvailableSquares(ref squares, pos);
+
+
+        if (team == TurnManager.GetTeam())
+            SetAvailableSquares(ref squares, pos);
     }
 
     public virtual void OnBeingDropped(Square squareDroped)
@@ -117,6 +120,7 @@ public class Piece : MonoBehaviour
 
     protected virtual void OnPieceMoved(Square _square)
     {
+        TurnManager.NextTeam();
         currentSquare.isOcuped = false;
         currentSquare = _square;
         currentSquare.isOcuped = true;

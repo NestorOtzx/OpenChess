@@ -27,37 +27,37 @@ public class PiecesGenerator : MonoBehaviour
     public void GenerateWhitePieces()
     {
         //Rooks
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Rook, new Vector2Int(0, 0));
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Rook, new Vector2Int(7, 0));
+        CreatePiece(Team.White, TypeOfPiece.Rook, new Vector2Int(0, 0));
+        CreatePiece(Team.White, TypeOfPiece.Rook, new Vector2Int(7, 0));
 
         //Bishops
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Bishop, new Vector2Int(2, 0));
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Bishop, new Vector2Int(5, 0));
+        CreatePiece(Team.White, TypeOfPiece.Bishop, new Vector2Int(2, 0));
+        CreatePiece(Team.White, TypeOfPiece.Bishop, new Vector2Int(5, 0));
 
 
 
         //Knights
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Knight, new Vector2Int(1, 0));
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Knight, new Vector2Int(6, 0));
+        CreatePiece(Team.White, TypeOfPiece.Knight, new Vector2Int(1, 0));
+        CreatePiece(Team.White, TypeOfPiece.Knight, new Vector2Int(6, 0));
 
         //King
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.King, new Vector2Int(3, 0));
+        CreatePiece(Team.White, TypeOfPiece.King, new Vector2Int(3, 0));
 
         //Queen
-        CreatePiece(TeamOfPiece.White, TypeOfPiece.Queen, new Vector2Int(4, 0));
+        CreatePiece(Team.White, TypeOfPiece.Queen, new Vector2Int(4, 0));
 
         
 
         //Pawns
         for (int x = 0; x < 8; x++)
         {
-            CreatePiece(TeamOfPiece.White, TypeOfPiece.Pawn, new Vector2Int(x, 1));
+            CreatePiece(Team.White, TypeOfPiece.Pawn, new Vector2Int(x, 1));
         }
     }
 
-    void CreatePiece(TeamOfPiece team, TypeOfPiece type, Vector2Int position)
+    void CreatePiece(Team team, TypeOfPiece type, Vector2Int position)
     {
-        if (team == TeamOfPiece.White)
+        if (team == Team.White)
             Instantiate(GetWhitePiece(type), GameManager.boardGenerator.squares[position.x, position.y].transform);
         else
             Instantiate(GetBlackPiece(type), GameManager.boardGenerator.squares[position.x, position.y].transform);
@@ -66,20 +66,27 @@ public class PiecesGenerator : MonoBehaviour
     public void GenerateBlackPieces()
     {
         //Rooks
-        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Rook, new Vector2Int(0, 7));
-        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Rook, new Vector2Int(7, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Rook, new Vector2Int(0, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Rook, new Vector2Int(7, 7));
 
         //Bishops
-        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Bishop, new Vector2Int(2, 7));
-        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Bishop, new Vector2Int(5, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Bishop, new Vector2Int(2, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Bishop, new Vector2Int(5, 7));
+
+        //Knights
+        CreatePiece(Team.Black, TypeOfPiece.Knight, new Vector2Int(1, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Knight, new Vector2Int(6, 7));
+
+        //King
+        CreatePiece(Team.Black, TypeOfPiece.King, new Vector2Int(3, 7));
 
         //Queen
-        CreatePiece(TeamOfPiece.Black, TypeOfPiece.Queen, new Vector2Int(4, 7));
+        CreatePiece(Team.Black, TypeOfPiece.Queen, new Vector2Int(4, 7));
 
         //Pawns
-        for (int x = 0; x < 7; x++)
+        for (int x = 0; x < 8; x++)
         {
-            CreatePiece(TeamOfPiece.Black, TypeOfPiece.Pawn, new Vector2Int(x, 6));
+            CreatePiece(Team.Black, TypeOfPiece.Pawn, new Vector2Int(x, 6));
         }
     }
     GameObject GetBlackPiece(TypeOfPiece type)
