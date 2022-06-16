@@ -121,7 +121,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3131934933694353515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9572e914b9b1a3440b626e8099175666, type: 3}
+  m_Script: {fileID: 11500000, guid: e8ed5ed197b7fed41abb1510668b15b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+  directionToMove: {x: 0, y: -1}
+  placesToAttack:
+  - {x: -1, y: -1}
+  - {x: 1, y: -1}

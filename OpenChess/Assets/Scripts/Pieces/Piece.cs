@@ -17,15 +17,21 @@ public class Piece : MonoBehaviour
 {
     protected Square currentSquare;
 
-    List<Square> availableSquares = new List<Square>();
+    public List<Square> availableSquares = new List<Square>();
 
     public Team team;
+
+    //This is useful for the AI to identify the best move.
+    public int valueOnTheBoard = 10;
 
     private void Start()
     {
         currentSquare = transform.parent.GetComponent<Square>();
         currentSquare.isOcuped = true;
         currentSquare.currentPiece = this;
+
+        GameScore.pointsByTeam[team] += valueOnTheBoard;
+
     }
 
     public virtual void SetAvailableSquares(ref Square [,] squares, Vector2Int pos)
@@ -62,7 +68,7 @@ public class Piece : MonoBehaviour
         Vector2Int pos = currentSquare.squarePos;
 
 
-        if (team == TurnManager.GetTeam())
+        if (team == TurnManager.GetCurrentTeam())
             SetAvailableSquares(ref squares, pos);
     }
 
@@ -115,15 +121,19 @@ public class Piece : MonoBehaviour
 
     public virtual void OnBeingCaptured()
     {
+        if (team == Team.Black)
+            Debug.Log("I LOST A PIECE D:");
+        GameScore.pointsByTeam[team] -= valueOnTheBoard;
         currentSquare.currentPiece = null;
     }
 
     protected virtual void OnPieceMoved(Square _square)
     {
-        TurnManager.NextTeam();
         currentSquare.isOcuped = false;
+        currentSquare.currentPiece = null;
         currentSquare = _square;
         currentSquare.isOcuped = true;
+        TurnManager.NextTeam();
     }
 
 

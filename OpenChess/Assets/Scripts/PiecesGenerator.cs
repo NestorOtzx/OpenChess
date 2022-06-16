@@ -6,19 +6,11 @@ using UnityEngine;
 
 public class PiecesGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [System.Serializable]
-    public struct PieceInfo
-    {
-        public int position;
-        public TypeOfPiece type;
-    }
-
     public GameObject[] whitePieces, blackPieces;
 
     [TextArea(5, 20)]
     public string generatorIndications;
-    void Start()
+    void Awake()
     {
         GenerateWhitePieces();
         GenerateBlackPieces();

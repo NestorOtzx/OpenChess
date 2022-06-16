@@ -31,5 +31,13 @@ public class King : Piece
         }
     }
 
+    public override void OnBeingCaptured()
+    {
+        base.OnBeingCaptured();
+        GameManager.instance.GameOver();
+
+    }
+
+
 
 }

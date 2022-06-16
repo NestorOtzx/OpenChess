@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragPiecesManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
     Piece currentPiece;
     Camera mainC;
 
     bool dragging = false;
 
-    public LayerMask piecesLayer, boardLayer;
- 
+    [SerializeField]
+    LayerMask piecesLayer, boardLayer;
+
+    public Team currentTeam;
 
     void Start()
     {
@@ -20,6 +22,11 @@ public class DragPiecesManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Play();
+    }
+
+    public virtual void Play()
+    {
         if (Input.GetMouseButtonDown(0)) //Get the piece under the cursor
         {
             RaycastHit2D hit = Physics2D.GetRayIntersection(mainC.ScreenPointToRay(Input.mousePosition), 50, piecesLayer);
@@ -27,8 +34,12 @@ public class DragPiecesManager : MonoBehaviour
             if (hit.collider != null)
             {
                 currentPiece = hit.transform.GetComponent<Piece>();
-                currentPiece.OnBeingGrabbed();
-                dragging = true;
+
+                if (currentPiece.team == currentTeam)
+                {
+                    currentPiece.OnBeingGrabbed();
+                    dragging = true;
+                }
             }
         }
         if (Input.GetMouseButtonUp(0))
@@ -56,6 +67,5 @@ public class DragPiecesManager : MonoBehaviour
             newPos.z = 0;
             currentPiece.transform.position = newPos;
         }
-
     }
 }

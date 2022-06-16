@@ -17,14 +17,6 @@ public class BoardGenerator : MonoBehaviour
 
         GenerateBoard();
 
-        for (int i = 0; i<boardLenghtY; i++)
-        {
-            for (int j = 0; j<boardLenghtX; j++)
-            {
-                Debug.Log(squares[i, j]);
-            }
-        }
-        
     }
 
     private void GenerateBoard()

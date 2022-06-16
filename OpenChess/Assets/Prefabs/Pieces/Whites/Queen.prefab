@@ -124,4 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf96c895c6cf784ab00114eb9333086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableSquares: []
   team: 0
+  valueOnTheBoard: 90
