@@ -4,8 +4,27 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    public bool isOcuped;
-    public bool isAvailable = false;
+    public GameObject highlight;
+    SpriteRenderer spr;
     public Vector2Int squarePos;
+
+    //Utilities
+    public bool isOccupied;
     public Piece currentPiece;
+
+    private void Awake()
+    {
+        spr = GetComponent<SpriteRenderer>();
+        ToggleHighlight(false);
+    }
+
+    public void SetColor(Color color)
+    {
+        spr.color = color;
+    }
+
+    public void ToggleHighlight(bool t)
+    {
+        highlight.SetActive(t);
+    }
 }
