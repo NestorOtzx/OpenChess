@@ -11,14 +11,23 @@ public class PiecesGenerator : MonoBehaviour
 {
     public GameObject[] pieces;
 
-    string piecesLayout = "-,-,9,7,8,11,10,8,7,9,\n" +
-                          "-,-,6,6,6,6,6,6,6,6,\n" +
-                          "-,-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,-,\n" +
-                          "-,-,0,0,0,0,0,0,0,0,\n" +
-                          "-,-,3,1,2,5,4,2,1,3";
+    /*string piecesLayout = "9,7,8,11,10,8,7,9,\n" +
+                          "6,6,6,6,6,6,6,6,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "0,0,0,0,0,0,0,0,\n" +
+                          "3,1,2,5,4,2,1,3";*/
+
+    string piecesLayout = "9,7,8,11,10,8,7,9,\n" +
+                          "6,6,6,6,6,6,6,6,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "-,-,-,-,-,-,-,\n" +
+                          "0,0,0,0,0,0,0,0,\n" +
+                          "3,-,-,5,-,-,-,3";
 
 
 
@@ -35,6 +44,11 @@ public class PiecesGenerator : MonoBehaviour
     {
         string[] allLines = piecesLayout.Split("\n");
         System.Array.Reverse(allLines);
+
+        if (piecesLayout == "")
+        {
+            return;
+        }
 
         for (int y = 0; y < BoardManager.board.GetLength(1); y++)
         {

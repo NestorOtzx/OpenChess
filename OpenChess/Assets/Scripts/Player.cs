@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     bool dragging = false;
 
     public LayerMask piecesLayer, boardLayer;
+    public TEAM playerTeam;
 
     Piece piece;
     List<Square> possibleMoves;
@@ -27,10 +28,18 @@ public class Player : MonoBehaviour
             RaycastHit2D hit = Physics2D.GetRayIntersection(mainC.ScreenPointToRay(Input.mousePosition), 50, piecesLayer);
             if (hit.collider)
             {
-                dragging = true;
                 piece = PiecesGenerator.allPieces[hit.transform.gameObject];
-                possibleMoves = piece.GetPossibleMoves();
-                HighlightPossibleMoves(true);
+                
+                if (piece.team == TurnManager.currentTeamTurn)
+                {
+                    dragging = true;
+                    possibleMoves = piece.GetPossibleMoves();
+                    HighlightPossibleMoves(true);
+                }
+                else
+                {
+                    piece = null;
+                }
             }
         }
         if (Input.GetMouseButtonUp(0))
@@ -50,11 +59,20 @@ public class Player : MonoBehaviour
 
             if (square.collider && square.transform != piece.currentSquare.transform)
             {
-                piece.Move(BoardManager.allSquares[square.transform.gameObject]);
+                Square sqreToJump = BoardManager.allSquares[square.transform.gameObject];
+
+                if (possibleMoves.Contains(sqreToJump))
+                {
+                    piece.Move(BoardManager.allSquares[square.transform.gameObject]);
+                }
+                else
+                {
+                    CancelMove();
+                }
             }
             else
             {
-                piece.transform.position = (Vector2)piece.currentSquare.squarePos;
+                CancelMove();
             }
         }
         if (dragging) //Piece Movement
@@ -63,6 +81,11 @@ public class Player : MonoBehaviour
             newPos.z = 0;
             piece.transform.position = newPos;
         }
+    }
+
+    private void CancelMove()
+    {
+        piece.transform.position = (Vector2)piece.currentSquare.squarePos;
     }
 
     void HighlightPossibleMoves(bool t)

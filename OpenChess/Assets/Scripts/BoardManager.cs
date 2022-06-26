@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-    string boardShape = "  □■□■□■□■\n" +
-                        "  ■□■□■□■□ ■\n" +
-                        "□■□■□■□■□■\n" +
-                        "■□■□■□■□■□\n" +
-                        "□■□■□■□■□■\n" +
-                        " □■□■□■□■□■□ ■  \n" +
-                        "  □■□■□■□■   \n" +
-                        "  ■□■□■□■□■□■□";
+    string boardShape ="□■□■□■□■\n" +
+                       "■□■□■□■□\n" +
+                       "□■□■□■□■\n" +
+                       "■□■□■□■□\n" +
+                       "□■□■□■□■\n" +
+                       "■□■□■□■□\n" +
+                       "□■□■□■□■\n" +
+                       "■□■□■□■□";
+    //Remember!!! Last line shouldnt have "\n";
+
+
 
     public GameObject squarePref;
+    
+    
+    
+    public Color blackSquareColor;
+
 
     public static Square[,] board;
 
@@ -31,7 +39,10 @@ public class BoardManager : MonoBehaviour
 
         System.Array.Reverse(allLines);
 
-        board = new Square[GetLongestFile(allLines), allLines.Length];
+        int lenght = GetLongestFile(allLines);
+        int width = allLines.Length;
+
+        board = new Square[lenght, width];
 
         for (int y = 0; y<allLines.Length; y++)
         {
@@ -45,9 +56,9 @@ public class BoardManager : MonoBehaviour
                 {
                     square = Instantiate(squarePref, new Vector2(x, y), Quaternion.identity, transform).GetComponent<Square>();
 
-                    Color sqrColor = Color.black;
-                    ColorUtility.TryParseHtmlString("#5945C6", out sqrColor);
-                    square.SetColor(sqrColor);
+                    //Color sqrColor = Color.black;
+                    //ColorUtility.TryParseHtmlString("#5945C6", out sqrColor);
+                    square.SetColor(blackSquareColor);
                 }
                 else if (letter == '□')
                 {

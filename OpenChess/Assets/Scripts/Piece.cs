@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TEAM
-{
-    white, black
-}
+
 
 
 public class Piece : MonoBehaviour
@@ -85,11 +82,19 @@ public class Piece : MonoBehaviour
         currentPos = squareToMove.squarePos;
 
 
+        if (squareToMove.currentPiece != null && squareToMove.currentPiece.team != team)
+        {
+            Destroy(squareToMove.currentPiece.gameObject);
+            squareToMove.currentPiece = null;
+        }
+
         currentSquare = squareToMove;
         currentSquare.isOccupied = true;
         currentSquare.currentPiece = this;
 
         info.timesMoved++;
+
+        TurnManager.NextTeam();
     }
 }
 
