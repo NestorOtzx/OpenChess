@@ -11,25 +11,6 @@ public class PiecesGenerator : MonoBehaviour
 {
     public GameObject[] pieces;
 
-    /*string piecesLayout = "9,7,8,11,10,8,7,9,\n" +
-                          "6,6,6,6,6,6,6,6,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "0,0,0,0,0,0,0,0,\n" +
-                          "3,1,2,5,4,2,1,3";*/
-
-    string piecesLayout = "9,7,8,11,10,8,7,9,\n" +
-                          "6,6,6,6,6,6,6,6,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "-,-,-,-,-,-,-,\n" +
-                          "0,0,0,0,0,0,0,0,\n" +
-                          "3,1,2,5,4,2,1,3";
-
-
 
     public static Dictionary<GameObject, Piece> allPieces = new Dictionary<GameObject, Piece>();
 
@@ -37,10 +18,10 @@ public class PiecesGenerator : MonoBehaviour
     private void Awake()
     {
         allPieces.Clear();
-        GeneratePieces();
+        GeneratePieces(GameManager.instance.gameMode.pieces);
     }
 
-    void GeneratePieces()
+    void GeneratePieces(string piecesLayout)
     {
         string[] allLines = piecesLayout.Split("\n");
         System.Array.Reverse(allLines);

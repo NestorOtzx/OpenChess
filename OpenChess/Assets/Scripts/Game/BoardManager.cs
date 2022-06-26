@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-    string boardShape ="□■□■□■□■\n" +
-                       "■□■□■□■□\n" +
-                       "□■□■□■□■\n" +
-                       "■□■□■□■□\n" +
-                       "□■□■□■□■\n" +
-                       "■□■□■□■□\n" +
-                       "□■□■□■□■\n" +
-                       "■□■□■□■□";
     //Remember!!! Last line shouldnt have "\n";
 
 
@@ -29,48 +21,51 @@ public class BoardManager : MonoBehaviour
 
     private void Awake()
     {
-        GenerateBoard();
+        GenerateBoard(GameManager.instance.gameMode.board);
         
     }
 
-    void GenerateBoard()
+    void GenerateBoard(string boardShape)
     {
         string [] allLines = boardShape.Split("\n");
 
         System.Array.Reverse(allLines);
 
-        int lenght = GetLongestFile(allLines);
-        int width = allLines.Length;
+        int lenghtY = allLines.Length;
+        int lenghtX = GetLongestFile(allLines);
 
-        board = new Square[lenght, width];
+        Debug.Log("X: " + lenghtX);
+        Debug.Log("Y: " + lenghtY);
 
-        for (int y = 0; y<allLines.Length; y++)
+        board = new Square[lenghtX, lenghtY];
+
+        for (int y = 0; y < allLines.Length; y++)
         {
-            for (int x = 0; x<allLines[y].Length; x++)
+
+            for (int x = 0; x < allLines[y].Length; x++)
             {
-                char letter = allLines[y][x];
+                string currentLine = allLines[y];
 
                 Square square = null;
 
-                if (letter == '■')
+                if (currentLine[x] == '□')
                 {
                     square = Instantiate(squarePref, new Vector2(x, y), Quaternion.identity, transform).GetComponent<Square>();
-
-                    //Color sqrColor = Color.black;
-                    //ColorUtility.TryParseHtmlString("#5945C6", out sqrColor);
                     square.SetColor(blackSquareColor);
                 }
-                else if (letter == '□')
+                else if (currentLine[x] == '■')
                 {
                     square = Instantiate(squarePref, new Vector2(x, y), Quaternion.identity, transform).GetComponent<Square>();
                 }
 
+
+
                 board[x, y] = square;
+
                 if (square)
                 {
                     square.squarePos = new Vector2Int(x, y);
                     allSquares.Add(square.gameObject, square);
-
                 }
             }
         }
