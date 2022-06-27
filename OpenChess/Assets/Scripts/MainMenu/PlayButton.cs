@@ -25,7 +25,6 @@ public class PlayButton : MonoBehaviour
     public void OnClick()
     {
         GameManager.instance.gameMode = myMode;
-        GameManager.instance.LoadScene(1);
     }
 
 }

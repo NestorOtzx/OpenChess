@@ -14,7 +14,6 @@ public class PiecesGenerator : MonoBehaviour
 
     public static Dictionary<GameObject, Piece> allPieces = new Dictionary<GameObject, Piece>();
 
-
     private void Awake()
     {
         allPieces.Clear();

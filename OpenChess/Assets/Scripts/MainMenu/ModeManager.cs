@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
-[System.Serializable]
 public struct Mode
 {
     public string name;
@@ -17,36 +15,68 @@ public struct Mode
 
 public class ModeManager : MonoBehaviour
 {
-    
-
     public GameObject modeButtonPrefab;
     public Transform grid;
 
-
-    [SerializeField]
-    public List<Mode> allModes = new List<Mode>();
+    public List<Mode> basicModes = new List<Mode>();
     private void Awake()
     {
+        CreateBaseModes();
         CreateBaseFiles();
         ReadAllFiles();
     }
+
+    void CreateBaseModes()
+    {
+        string modesPath = Application.dataPath + "/Modes";
+
+
+        string[] paths = Directory.GetDirectories(modesPath);
+
+        for (int i = 0; i < paths.Length; i++)
+        {
+            string name = paths[i].Split('\\')[1];
+
+            string board = "";
+            string pieces = "";
+
+            if (File.Exists(paths[i] + "/board.txt") && File.Exists(paths[i] + "/pieces.txt"))
+            {
+                board = File.ReadAllText(paths[i] + "/board.txt");
+                pieces = File.ReadAllText(paths[i] + "/pieces.txt");
+            }
+            else
+            {
+                Debug.LogError("Files -board.txt- or -pieces.txt- does'nt exist int the mode: " + name);
+                continue;
+            }
+
+            Mode newMode;
+            newMode.name = name;
+            newMode.board = board;
+            newMode.pieces = pieces;
+
+            basicModes.Add(newMode);
+        }
+    }
+
     public void CreateBaseFiles()
     {
         string modesPath = Application.persistentDataPath + "/Modes";
 
         Directory.CreateDirectory(modesPath);
 
-        for (int i = 0; i < allModes.Count; i++)
+        for (int i = 0; i < basicModes.Count; i++)
         {
-            string currentModePath = modesPath + "/" + allModes[i].name;
+            string currentModePath = modesPath + "/" + basicModes[i].name;
 
             Debug.Log("basic Mode created at: " + currentModePath);
 
             Directory.CreateDirectory(currentModePath);
 
-            File.WriteAllText(currentModePath+"/board.txt", allModes[i].board);
+            File.WriteAllText(currentModePath+"/board.txt", basicModes[i].board);
 
-            File.WriteAllText(currentModePath + "/pieces.txt", allModes[i].pieces);
+            File.WriteAllText(currentModePath + "/pieces.txt", basicModes[i].pieces);
            
         }
 

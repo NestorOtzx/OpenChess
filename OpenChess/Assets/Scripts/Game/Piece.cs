@@ -84,7 +84,8 @@ public class Piece : MonoBehaviour
 
         if (squareToMove.currentPiece != null && squareToMove.currentPiece.team != team)
         {
-            Destroy(squareToMove.currentPiece.gameObject);
+            PiecesGenerator.allPieces.Remove(squareToMove.currentPiece.gameObject);
+            DestroyImmediate(squareToMove.currentPiece.gameObject);
             squareToMove.currentPiece = null;
         }
 

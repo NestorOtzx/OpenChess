@@ -19,6 +19,8 @@ public static class Rules
 
     static bool PawnRules(Piece pawn, Square squareToMove)
     {
+
+
         bool valid = true;
 
         int x = pawn.currentPos.x;
@@ -102,7 +104,7 @@ public static class Rules
             Square square = BoardManager.board[x, y + pawn.basicMoves[0].y * 2];
             Square prevSquare = BoardManager.board[x, y + pawn.basicMoves[0].y];
 
-            if (BoardManager.CheckBoardPos(x,y) && PawnRules(pawn, square) && PawnRules(pawn, prevSquare))
+            if (BoardManager.CheckBoardPos(square)&& BoardManager.CheckBoardPos(prevSquare)&& PawnRules(pawn, square) && PawnRules(pawn, prevSquare))
                 all.Add(square);
         }
 

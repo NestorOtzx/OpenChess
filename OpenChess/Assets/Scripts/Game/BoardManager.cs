@@ -58,12 +58,10 @@ public class BoardManager : MonoBehaviour
                     square = Instantiate(squarePref, new Vector2(x, y), Quaternion.identity, transform).GetComponent<Square>();
                 }
 
-
-
-                board[x, y] = square;
-
                 if (square)
                 {
+                    board[x, y] = square;
+
                     square.squarePos = new Vector2Int(x, y);
                     allSquares.Add(square.gameObject, square);
                 }
@@ -73,6 +71,19 @@ public class BoardManager : MonoBehaviour
 
     public static bool CheckBoardPos(int x, int y)
     {
+        return x >= 0 && y >= 0 && x < board.GetLength(0) && y < board.GetLength(1) && board[x, y] != null;
+    }
+
+    public static bool CheckBoardPos(Square square)
+    {
+        if (!square)
+        {
+            return false;
+        }
+
+        int x = square.squarePos.x;
+        int y = square.squarePos.y;
+
         return x >= 0 && y >= 0 && x < board.GetLength(0) && y < board.GetLength(1) && board[x, y] != null;
     }
 

@@ -26,8 +26,14 @@ public class AIPlayer : MonoBehaviour
     {
         if (TurnManager.currentTeamTurn == IAteam)
         {
+            RemoveDeadPieces();
             Play();
         }
+    }
+
+    void RemoveDeadPieces()
+    {
+        myPieces.RemoveAll(item => item == null);
     }
 
     void Play()
@@ -36,14 +42,26 @@ public class AIPlayer : MonoBehaviour
 
         Piece pieceToMove = null;
 
+        List<Piece> piecesCanMove = new List<Piece>(myPieces);
+
+
         while (squares == null)
         {
-            pieceToMove = myPieces[Random.Range(0, myPieces.Count)];
+            if (piecesCanMove.Count < 1)
+            {
+                Debug.LogError("NO MOVES");
+                return;
+            }
+
+            int piec = Random.Range(0, piecesCanMove.Count);
+
+            pieceToMove = piecesCanMove[piec];
 
             squares =  pieceToMove.GetPossibleMoves().ToArray();
 
             if (squares.Length < 1)
             {
+                piecesCanMove.Remove(pieceToMove);
                 squares = null;
             }
         }
@@ -51,7 +69,9 @@ public class AIPlayer : MonoBehaviour
         
         int sqreID = Random.Range(0, squares.Length);
 
+
         Square squareToMove = squares[sqreID];
+        Debug.Log("Move " + pieceToMove.name + " in: " + pieceToMove.currentPos + " to " + squareToMove.squarePos);
 
         pieceToMove.Move(squareToMove);
 
