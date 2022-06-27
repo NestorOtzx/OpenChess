@@ -30,12 +30,19 @@ public class ModeManager : MonoBehaviour
     {
         string modesPath = Application.dataPath + "/Modes";
 
+        Debug.Log(modesPath);
 
         string[] paths = Directory.GetDirectories(modesPath);
 
         for (int i = 0; i < paths.Length; i++)
         {
-            string name = paths[i].Split('\\')[1];
+            paths[i].Replace("\\", "/");
+
+            string [] allDirs =paths[i].Split('/');
+
+            string name = allDirs[allDirs.Length-1];
+
+            Debug.Log(name);
 
             string board = "";
             string pieces = "";
@@ -43,6 +50,7 @@ public class ModeManager : MonoBehaviour
             if (File.Exists(paths[i] + "/board.txt") && File.Exists(paths[i] + "/pieces.txt"))
             {
                 board = File.ReadAllText(paths[i] + "/board.txt");
+                Debug.Log(Path.GetDirectoryName(paths[i]+"/board.txt"));
                 pieces = File.ReadAllText(paths[i] + "/pieces.txt");
             }
             else
@@ -70,8 +78,6 @@ public class ModeManager : MonoBehaviour
         {
             string currentModePath = modesPath + "/" + basicModes[i].name;
 
-            Debug.Log("basic Mode created at: " + currentModePath);
-
             Directory.CreateDirectory(currentModePath);
 
             File.WriteAllText(currentModePath+"/board.txt", basicModes[i].board);
@@ -90,7 +96,13 @@ public class ModeManager : MonoBehaviour
 
         for (int i = 0; i<paths.Length; i++)
         {
-            string name = paths[i].Split('\\')[1];
+            paths[i].Replace("\\", "/");
+
+            string [] allDirs =paths[i].Split('/');
+
+            string name = allDirs[allDirs.Length-1];
+
+            Debug.Log(name + " 2");
 
             string board = "";
             string pieces = "";
@@ -115,6 +127,22 @@ public class ModeManager : MonoBehaviour
 
             button.Init(newMode);
         }
+    }
+
+    //Only used for debug purposes.
+    public static Mode GetDefMode()
+    {
+        string modePath = Application.dataPath + "/Modes/Classic";
+
+        string board = File.ReadAllText(modePath + "/board.txt");
+        string pieces = File.ReadAllText(modePath + "/pieces.txt");
+
+        Mode newMode;
+        newMode.name = "Default";
+        newMode.board = board;
+        newMode.pieces = pieces;
+
+        return newMode;
     }
 
 }

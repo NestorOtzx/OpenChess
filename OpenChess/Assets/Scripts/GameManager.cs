@@ -10,7 +10,15 @@ public class GameManager : MonoBehaviour
     public Mode gameMode;
 
     private void Awake()
-    {
+    {   
+        Debug.Log("Game loadedd "+gameMode.name);
+
+        if (gameMode.name == null)
+        {
+            Debug.Log("DEf mode");
+            gameMode = ModeManager.GetDefMode();
+        }
+
         if (!instance)
         {
             instance = this;
