@@ -36,13 +36,13 @@ public class ModeManager : MonoBehaviour
 
         for (int i = 0; i < paths.Length; i++)
         {
-            paths[i].Replace("\\", "/");
+            paths[i] = paths[i].Replace(@"\", "/");
 
-            string [] allDirs =paths[i].Split('/');
+            string[] allDirs = paths[i].Split('/');
 
-            string name = allDirs[allDirs.Length-1];
+            string name = allDirs[allDirs.Length - 1];
 
-            Debug.Log(name);
+            Debug.Log(name + " 1");
 
             string board = "";
             string pieces = "";
@@ -72,6 +72,8 @@ public class ModeManager : MonoBehaviour
     {
         string modesPath = Application.persistentDataPath + "/Modes";
 
+        Debug.Log("P DATA PATH: " + modesPath);
+
         Directory.CreateDirectory(modesPath);
 
         for (int i = 0; i < basicModes.Count; i++)
@@ -96,7 +98,7 @@ public class ModeManager : MonoBehaviour
 
         for (int i = 0; i<paths.Length; i++)
         {
-            paths[i].Replace("\\", "/");
+            paths[i] = paths[i].Replace(@"\", "/");
 
             string [] allDirs =paths[i].Split('/');
 

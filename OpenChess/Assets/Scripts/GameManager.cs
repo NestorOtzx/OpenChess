@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
         if (gameMode.name == null)
         {
-            Debug.Log("DEf mode");
             gameMode = ModeManager.GetDefMode();
         }
 
