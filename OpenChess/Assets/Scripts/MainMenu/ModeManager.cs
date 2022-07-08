@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
 public struct Mode
 {
     public string name;
@@ -13,66 +14,64 @@ public struct Mode
     public string pieces;
 }
 
+public enum adversaryMode
+{
+    Friend, Cpu
+}
+
 public class ModeManager : MonoBehaviour
 {
-    public GameObject modeButtonPrefab;
-    public Transform grid;
+    public TMP_Dropdown adversaryDrop;
 
-    public List<Mode> basicModes = new List<Mode>();
+    adversaryMode adversary;
+
+
+
+
+    public TMP_Dropdown modeDrop;
+
+    static List<Mode> allmodes = new List<Mode>();
+
     private void Awake()
     {
-        CreateBaseModes();
-        CreateBaseFiles();
-        ReadAllFiles();
-    }
+        allmodes.Clear();
 
-    void CreateBaseModes()
-    {
-        string modesPath = Application.dataPath + "/Modes";
+        CreateBaseFiles(GetModesInFolder(Application.dataPath + "/Modes"));
 
-        Debug.Log(modesPath);
+        List < Mode > Modes = GetModesInFolder(Application.persistentDataPath + "/Modes");
 
-        string[] paths = Directory.GetDirectories(modesPath);
+        modeDrop.ClearOptions();
 
-        for (int i = 0; i < paths.Length; i++)
+        for (int i = 0; i<Modes.Count; i++)
         {
-            paths[i] = paths[i].Replace(@"\", "/");
+            allmodes.Add(Modes[i]);
+            modeDrop.options.Add(new TMP_Dropdown.OptionData() { text = Modes[i].name });
+        }
 
-            string[] allDirs = paths[i].Split('/');
+        adversaryDrop.ClearOptions();
 
-            string name = allDirs[allDirs.Length - 1];
-
-            Debug.Log(name + " 1");
-
-            string board = "";
-            string pieces = "";
-
-            if (File.Exists(paths[i] + "/board.txt") && File.Exists(paths[i] + "/pieces.txt"))
-            {
-                board = File.ReadAllText(paths[i] + "/board.txt");
-                Debug.Log(Path.GetDirectoryName(paths[i]+"/board.txt"));
-                pieces = File.ReadAllText(paths[i] + "/pieces.txt");
-            }
-            else
-            {
-                Debug.LogError("Files -board.txt- or -pieces.txt- does'nt exist int the mode: " + name);
-                continue;
-            }
-
-            Mode newMode;
-            newMode.name = name;
-            newMode.board = board;
-            newMode.pieces = pieces;
-
-            basicModes.Add(newMode);
+        for(int i = 0; i<adversaryMode.GetValues(adversary.GetType()).Length; i++)
+        {
+            adversaryDrop.options.Add(new TMP_Dropdown.OptionData() { text = adversary.ToString() });
+            adversary = adversary.Next();
         }
     }
 
-    public void CreateBaseFiles()
+    public adversaryMode GetAdversaryMode()
+    {
+        return (adversaryMode)System.Enum.ToObject(typeof(adversaryMode), adversaryDrop.value);
+    }
+
+    public Mode GetCurrentMode()
+    {
+        return allmodes[modeDrop.value];
+    }
+
+   
+
+    public void CreateBaseFiles(List<Mode> basicModes)
     {
         string modesPath = Application.persistentDataPath + "/Modes";
-
-        Debug.Log("P DATA PATH: " + modesPath);
 
         Directory.CreateDirectory(modesPath);
 
@@ -87,29 +86,30 @@ public class ModeManager : MonoBehaviour
             File.WriteAllText(currentModePath + "/pieces.txt", basicModes[i].pieces);
            
         }
-
     }
 
-    public void ReadAllFiles()
+    List<Mode> GetModesInFolder(string modesPath)
     {
-        string modesPath = Application.persistentDataPath + "/Modes";
+
+        Debug.Log("Get modes from: " +modesPath);
+        List<Mode> bModes = new List<Mode>();
+
 
         string[] paths = Directory.GetDirectories(modesPath);
 
-        for (int i = 0; i<paths.Length; i++)
+        for (int i = 0; i < paths.Length; i++)
         {
             paths[i] = paths[i].Replace(@"\", "/");
 
-            string [] allDirs =paths[i].Split('/');
+            string[] allDirs = paths[i].Split('/');
 
-            string name = allDirs[allDirs.Length-1];
+            string name = allDirs[allDirs.Length - 1];
 
-            Debug.Log(name + " 2");
 
             string board = "";
             string pieces = "";
 
-            if (File.Exists(paths[i]+"/board.txt") && File.Exists(paths[i] + "/pieces.txt"))
+            if (File.Exists(paths[i] + "/board.txt") && File.Exists(paths[i] + "/pieces.txt"))
             {
                 board = File.ReadAllText(paths[i] + "/board.txt");
                 pieces = File.ReadAllText(paths[i] + "/pieces.txt");
@@ -120,17 +120,16 @@ public class ModeManager : MonoBehaviour
                 continue;
             }
 
-            PlayButton button = Instantiate(modeButtonPrefab, grid).GetComponent<PlayButton>();
-
             Mode newMode;
             newMode.name = name;
             newMode.board = board;
             newMode.pieces = pieces;
 
-            button.Init(newMode);
+            bModes.Add(newMode);
         }
-    }
 
+        return bModes;
+    }
     //Only used for debug purposes.
     public static Mode GetDefMode()
     {

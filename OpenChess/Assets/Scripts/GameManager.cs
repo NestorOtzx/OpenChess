@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Mode gameMode;
+    public adversaryMode adversaryMode;
 
     private void Awake()
     {   

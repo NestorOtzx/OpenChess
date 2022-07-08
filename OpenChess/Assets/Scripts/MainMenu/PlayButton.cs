@@ -1,30 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 
 
 public class PlayButton : MonoBehaviour
 {
-    Mode myMode;
-
-    TextMeshProUGUI tmpro;
-
-    private void Awake()
-    {
-        tmpro = GetComponentInChildren<TextMeshProUGUI>();
-    }
-
-    public void Init(Mode modeToPlay)
-    {
-        myMode = modeToPlay;
-        tmpro.text = modeToPlay.name;
-    }
-
-
+    public ModeManager mode;
+   
     public void OnClick()
     {
-        GameManager.instance.gameMode = myMode;
+        GameManager.instance.adversaryMode = mode.GetAdversaryMode();
+        GameManager.instance.gameMode = mode.GetCurrentMode();
         GameManager.instance.LoadScene(1);
     }
 

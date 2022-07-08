@@ -34,9 +34,6 @@ public class BoardManager : MonoBehaviour
         int lenghtY = allLines.Length;
         int lenghtX = GetLongestFile(allLines);
 
-        Debug.Log("X: " + lenghtX);
-        Debug.Log("Y: " + lenghtY);
-
         board = new Square[lenghtX, lenghtY];
 
         for (int y = 0; y < allLines.Length; y++)
@@ -98,8 +95,6 @@ public class BoardManager : MonoBehaviour
                 longest = lines[i].Length;
             }
         }
-
-        Debug.Log(longest);
 
         return longest;
     }
