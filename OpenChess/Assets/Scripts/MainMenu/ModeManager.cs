@@ -34,9 +34,12 @@ public class ModeManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Persistent data path: "+Application.persistentDataPath);
+
+
         allmodes.Clear();
 
-        CreateBaseFiles(GetModesInFolder(Application.dataPath + "/Modes"));
+        CreateBaseFiles();
 
         List < Mode > Modes = GetModesInFolder(Application.persistentDataPath + "/Modes");
 
@@ -69,8 +72,43 @@ public class ModeManager : MonoBehaviour
 
    
 
-    public void CreateBaseFiles(List<Mode> basicModes)
+    public void CreateBaseFiles()
     {
+        TextAsset[] textFile = Resources.LoadAll<TextAsset>("Modes");
+
+        List<Mode> basicModes = new List<Mode>();
+
+        Mode currentMode = new Mode();
+
+        int txtByFolder = 3;
+
+        for (int i = 0; i< textFile.Length; i++)
+        {
+            switch(textFile[i].name)
+            {
+                case "name":
+                    currentMode.name = textFile[i].text;
+                    break;
+                case "board":
+                    currentMode.board = textFile[i].text;
+                    break;
+                case "pieces":
+                    currentMode.pieces = textFile[i].text;
+                    break;
+            }
+
+            txtByFolder--;
+
+
+            if (txtByFolder <= 0)
+            {
+                txtByFolder = 3;
+                basicModes.Add(currentMode);
+                currentMode = new Mode();
+            }
+        }
+
+
         string modesPath = Application.persistentDataPath + "/Modes";
 
         Directory.CreateDirectory(modesPath);

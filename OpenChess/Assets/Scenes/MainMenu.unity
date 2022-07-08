@@ -226,7 +226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &121939055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -791,11 +791,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4013752638603795317, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013752638603795317, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013752639150488716, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_Name
@@ -1040,7 +1040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1306844059
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1464,6 +1464,7 @@ GameObject:
   - component: {fileID: 1796440706}
   - component: {fileID: 1796440705}
   - component: {fileID: 1796440704}
+  - component: {fileID: 1796440707}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -1535,7 +1536,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1796440705}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1796440707}
+        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1796440705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1574,6 +1587,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796440702}
   m_CullTransparentMesh: 1
+--- !u!114 &1796440707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796440702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ecd6c665f9b5f842bd29c0d3e1dc7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1841134051 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4013752639150488717, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
@@ -1816,11 +1841,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4013752638603795317, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013752638603795317, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013752639150488716, guid: b22435c8ff622bd4dbc7d5bd29c1dc38, type: 3}
       propertyPath: m_Name
