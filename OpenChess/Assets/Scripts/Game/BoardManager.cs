@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-    //Remember!!! Last line shouldnt have "\n";
-
-
-
     public GameObject squarePref;
     
-    
-    
     public Color blackSquareColor;
-
 
     public static Square[,] board;
 
@@ -21,12 +14,13 @@ public class BoardManager : MonoBehaviour
 
     private void Awake()
     {
-        GenerateBoard(GameManager.instance.gameMode.board);
-        
+        GenerateBoard();
     }
 
-    void GenerateBoard(string boardShape)
+    void GenerateBoard()
     {
+        string boardShape = GameManager.instance.gameMode.board;
+
         string [] allLines = boardShape.Split("\n");
 
         System.Array.Reverse(allLines);
@@ -66,11 +60,13 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    //Check if pos (x, y) exist in the board
     public static bool CheckBoardPos(int x, int y)
     {
         return x >= 0 && y >= 0 && x < board.GetLength(0) && y < board.GetLength(1) && board[x, y] != null;
     }
 
+    //Check if Square exist in the board
     public static bool CheckBoardPos(Square square)
     {
         if (!square)
@@ -84,6 +80,7 @@ public class BoardManager : MonoBehaviour
         return x >= 0 && y >= 0 && x < board.GetLength(0) && y < board.GetLength(1) && board[x, y] != null;
     }
 
+    //Used to set lenght to the matrix [,] board
     int GetLongestFile(string [] lines)
     {
         int longest= 0;

@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     bool dragging = false;
 
     public LayerMask piecesLayer, boardLayer;
-    public TEAM playerTeam;
+
+    public List<TEAM> team; //All teams controled by player{s}
 
     Piece piece;
     List<Square> possibleMoves;
@@ -19,10 +20,14 @@ public class Player : MonoBehaviour
         mainC = Camera.main;
     }
 
-    // Update is called once per frame
-   
     void Update()
     {
+        if (!team.Contains(TeamManager.currentTeamTurn)) //If its not player turn, return
+        {
+            return;
+        }
+
+
         if (Input.GetMouseButtonDown(0)) //Get the piece under the cursor
         {
             RaycastHit2D hit = Physics2D.GetRayIntersection(mainC.ScreenPointToRay(Input.mousePosition), 50, piecesLayer);
@@ -30,7 +35,7 @@ public class Player : MonoBehaviour
             {
                 piece = PiecesGenerator.allPieces[hit.transform.gameObject];
                 
-                if (piece.team == TurnManager.currentTeamTurn)
+                if (piece.team == TeamManager.currentTeamTurn)
                 {
                     dragging = true;
                     possibleMoves = piece.GetPossibleMoves();
@@ -42,7 +47,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) //Drop piece if exist
         {
             if (!piece)
             {
@@ -83,7 +88,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CancelMove()
+    private void CancelMove() //Return piece to the original pos
     {
         piece.transform.position = (Vector2)piece.currentSquare.squarePos;
     }
@@ -92,7 +97,7 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i<possibleMoves.Count; i++)
         {
-            possibleMoves[i].ToggleHighlight(t);
+            possibleMoves[i].SetHighlight(t);
         }
     }
 

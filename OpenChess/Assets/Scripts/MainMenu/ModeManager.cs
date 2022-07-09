@@ -14,65 +14,88 @@ public struct Mode
     public string pieces;
 }
 
-public enum adversaryMode
+public enum playMode
 {
-    Friend, Cpu
+    Player_Vs_Player, Player_Vs_Cpu, Cpu_Vs_Cpu
 }
 
 public class ModeManager : MonoBehaviour
 {
-    public TMP_Dropdown adversaryDrop;
+    public TMP_Dropdown gameModeDrop;
 
-    adversaryMode adversary;
+    static List<Mode> allGameModes = new List<Mode>();
 
+    public TMP_Dropdown playModeDrop;
 
+    playMode playmode;
 
-
-    public TMP_Dropdown modeDrop;
-
-    static List<Mode> allmodes = new List<Mode>();
 
     private void Awake()
     {
-        Debug.Log("Persistent data path: "+Application.persistentDataPath);
+        Debug.Log("Persistent data path: " + Application.persistentDataPath);
 
+        allGameModes.Clear();
+        gameModeDrop.ClearOptions();
+        playModeDrop.ClearOptions();
 
-        allmodes.Clear();
-
-        CreateBaseFiles();
-
-        List < Mode > Modes = GetModesInFolder(Application.persistentDataPath + "/Modes");
-
-        modeDrop.ClearOptions();
-
-        for (int i = 0; i<Modes.Count; i++)
-        {
-            allmodes.Add(Modes[i]);
-            modeDrop.options.Add(new TMP_Dropdown.OptionData() { text = Modes[i].name });
-        }
-
-        adversaryDrop.ClearOptions();
-
-        for(int i = 0; i<adversaryMode.GetValues(adversary.GetType()).Length; i++)
-        {
-            adversaryDrop.options.Add(new TMP_Dropdown.OptionData() { text = adversary.ToString() });
-            adversary = adversary.Next();
-        }
+        CreateBaseModes();
+        GameModesToDropDown();
+        PlayModesToDD();
     }
 
-    public adversaryMode GetAdversaryMode()
+
+    //Create basic modes in folder.
+    private void CreateBaseModes()
     {
-        return (adversaryMode)System.Enum.ToObject(typeof(adversaryMode), adversaryDrop.value);
+        Mode[] basicModes = GetBaseModes();
+
+        string modesPath = Application.persistentDataPath + "/Modes";
+
+        Directory.CreateDirectory(modesPath);
+
+        for (int i = 0; i < basicModes.Length; i++)
+        {
+            string currentModePath = modesPath + "/" + basicModes[i].name;
+
+            Directory.CreateDirectory(currentModePath);
+
+            File.WriteAllText(currentModePath + "/board.txt", basicModes[i].board);
+
+            File.WriteAllText(currentModePath + "/pieces.txt", basicModes[i].pieces);
+        }
     }
 
-    public Mode GetCurrentMode()
+    //Read the folder and add all the modes to dropdown
+    private void GameModesToDropDown()
     {
-        return allmodes[modeDrop.value];
+        List<Mode> Modes = GetModesInFolder(Application.persistentDataPath + "/Modes");
+
+
+        for (int i = 0; i < Modes.Count; i++)
+        {
+            allGameModes.Add(Modes[i]);
+            gameModeDrop.options.Add(new TMP_Dropdown.OptionData() { text = Modes[i].name });
+        }
     }
 
-   
 
-    public void CreateBaseFiles()
+
+    private void PlayModesToDD()
+    {
+        for (int i = 0; i < playMode.GetValues(playmode.GetType()).Length; i++)
+        {
+            //Allow to replace _ with spaces " ".
+            string dropText = playmode.ToString().Replace("_", " ");
+
+            playModeDrop.options.Add(new TMP_Dropdown.OptionData() { text = dropText });
+            playmode = playmode.Next();
+        }
+    }
+
+
+
+    //Get all default modes from Rosources folder
+    static Mode [] GetBaseModes()
     {
         TextAsset[] textFile = Resources.LoadAll<TextAsset>("Modes");
 
@@ -109,23 +132,10 @@ public class ModeManager : MonoBehaviour
         }
 
 
-        string modesPath = Application.persistentDataPath + "/Modes";
-
-        Directory.CreateDirectory(modesPath);
-
-        for (int i = 0; i < basicModes.Count; i++)
-        {
-            string currentModePath = modesPath + "/" + basicModes[i].name;
-
-            Directory.CreateDirectory(currentModePath);
-
-            File.WriteAllText(currentModePath+"/board.txt", basicModes[i].board);
-
-            File.WriteAllText(currentModePath + "/pieces.txt", basicModes[i].pieces);
-           
-        }
+        return basicModes.ToArray();
     }
 
+    //Get all modes in some folder
     List<Mode> GetModesInFolder(string modesPath)
     {
 
@@ -168,20 +178,20 @@ public class ModeManager : MonoBehaviour
 
         return bModes;
     }
-    //Only used for debug purposes.
-    public static Mode GetDefMode()
+
+    //Only used when you start the editor from the board scene
+    public static Mode GetBaseMode(int mode)
     {
-        string modePath = Application.dataPath + "/Modes/Classic";
-
-        string board = File.ReadAllText(modePath + "/board.txt");
-        string pieces = File.ReadAllText(modePath + "/pieces.txt");
-
-        Mode newMode;
-        newMode.name = "Default";
-        newMode.board = board;
-        newMode.pieces = pieces;
-
-        return newMode;
+        return GetBaseModes()[mode];
     }
 
+    public playMode GetPlayMode()
+    {
+        return (playMode)System.Enum.ToObject(typeof(playMode), playModeDrop.value);
+    }
+
+    public Mode GetCurrentGameMode()
+    {
+        return allGameModes[gameModeDrop.value];
+    }
 }

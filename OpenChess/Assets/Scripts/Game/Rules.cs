@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Rules 
 {
-    //----------------COMPLIES WITH RULES--------------------
+    //----------------CHECK IF MOVE COMPLIES WITH RULES--------------------
     public static bool MovementCompliesWithRules(Piece piece, Square squareToMove)
     {
         switch(piece.type)
@@ -34,7 +34,7 @@ public static class Rules
         return valid;
     }
 
-    //--------------MOVEMENT RULES----------------
+    //--------------NEXT MOVEMENT RULES----------------
     public static List<Square> GetMainRulesFor(Piece piece)
     {
         switch (piece.type)

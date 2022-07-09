@@ -4,36 +4,49 @@ using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
 {
-    public TEAM IAteam;
+    public List<TEAM> team; //All teams controled by AI
 
-    public List<Piece> myPieces = new List<Piece>();
+    //Pieces of each team  controled by AI
+    public Dictionary<TEAM, List<Piece>> myPieces = new Dictionary<TEAM, List<Piece>>();
 
     private void Start()
     {
-        Piece [] all = FindObjectsOfType<Piece>();
-
-        for (int i = 0; i<all.Length; i++)
-        {
-            if (all[i].team == IAteam)
-            {
-                myPieces.Add(all[i]);
-            }
-        }
+        GetMyPieces();
     }
-
 
     private void Update()
     {
-        if (TurnManager.currentTeamTurn == IAteam)
+        if (team.Contains(TeamManager.currentTeamTurn))
         {
             RemoveDeadPieces();
             Play();
         }
     }
 
+    private void GetMyPieces()
+    {
+        Piece[] all = FindObjectsOfType<Piece>();
+
+        for (int i = 0; i < team.Count; i++)
+        {
+            List<Piece> currentTeamPieces = new List<Piece>();
+
+            for (int j = 0; j < all.Length; j++)
+            {
+                if (all[j].team == team[i])
+                {
+                    currentTeamPieces.Add(all[j]);
+                }
+            }
+
+            myPieces.Add(team[i], currentTeamPieces);
+        }
+    }
+
+    //Remove dead pieces from myPieces
     void RemoveDeadPieces()
     {
-        myPieces.RemoveAll(item => item == null);
+        myPieces[TeamManager.currentTeamTurn].RemoveAll(item => item == null);
     }
 
     void Play()
@@ -42,9 +55,9 @@ public class AIPlayer : MonoBehaviour
 
         Piece pieceToMove = null;
 
-        List<Piece> piecesCanMove = new List<Piece>(myPieces);
+        List<Piece> piecesCanMove = new List<Piece>(myPieces[TeamManager.currentTeamTurn]);
 
-
+        //Select a random move
         while (squares == null)
         {
             if (piecesCanMove.Count < 1)
@@ -71,8 +84,7 @@ public class AIPlayer : MonoBehaviour
 
 
         Square squareToMove = squares[sqreID];
-        Debug.Log("Move " + pieceToMove.name + " in: " + pieceToMove.currentPos + " to " + squareToMove.squarePos);
-
+        //Debug.Log("Move " + pieceToMove.name + " in: " + pieceToMove.currentPos + " to " + squareToMove.squarePos);
         pieceToMove.Move(squareToMove);
 
     }

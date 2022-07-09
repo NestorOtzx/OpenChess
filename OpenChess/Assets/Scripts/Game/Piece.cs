@@ -8,13 +8,17 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
     public TypeOfPieces type;
+    
     public TEAM team;
+    
     public Vector2Int currentPos;
 
     public Square currentSquare;
-    //There are moves considered "special", like the 2 steps of the pawn, passed pawn, casltes, etc.
+
+    //Moves piece can do
     public Vector2Int[] basicMoves;
 
+    //Times to repeat each basic move, useful to do rook or bishop moves
     public uint repeatBasicMove = 1;
 
     public PieceInfo info = new PieceInfo();
@@ -71,7 +75,7 @@ public class Piece : MonoBehaviour
         return all;
     }
 
-   
+    //Move this peace to square
     public void Move(Square squareToMove)
     {
         currentSquare.isOccupied = false;
@@ -95,10 +99,12 @@ public class Piece : MonoBehaviour
 
         info.timesMoved++;
 
-        TurnManager.NextTeam();
+        //Next team turn
+        TeamManager.NextTeamTurn();
     }
 }
 
+//Useful information of this piece
 public class PieceInfo
 {
     public int timesMoved = 0;

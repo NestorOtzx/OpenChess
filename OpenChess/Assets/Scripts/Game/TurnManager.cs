@@ -7,14 +7,18 @@ public enum TEAM
     white, black
 }
 
-public class TurnManager 
+public class TeamManager 
 {
     public static TEAM currentTeamTurn = 0;
 
-    public static void NextTeam()
+    public static void NextTeamTurn()
     {
         currentTeamTurn = currentTeamTurn.Next();
     }
 
+    public static TEAM[] GetAllTeams()
+    {
+        return (TEAM[])System.Enum.GetValues(typeof(TEAM));
+    }
 
 }

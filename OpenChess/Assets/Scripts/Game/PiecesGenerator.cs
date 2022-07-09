@@ -11,17 +11,17 @@ public class PiecesGenerator : MonoBehaviour
 {
     public GameObject[] pieces;
 
-
     public static Dictionary<GameObject, Piece> allPieces = new Dictionary<GameObject, Piece>();
-
     private void Awake()
     {
         allPieces.Clear();
-        GeneratePieces(GameManager.instance.gameMode.pieces);
+        GeneratePieces();
     }
 
-    void GeneratePieces(string piecesLayout)
+    void GeneratePieces()
     {
+        string piecesLayout = GameManager.instance.gameMode.pieces;
+
         string[] allLines = piecesLayout.Split("\n");
         System.Array.Reverse(allLines);
 

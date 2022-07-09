@@ -16,6 +16,13 @@ public class BackgroundScroll : MonoBehaviour
 
     void Update()
     {
-        image.uvRect = new Rect(image.uvRect.position + new Vector2(speedX, speedY) * Time.deltaTime, image.uvRect.size);
+        BackgroundMovement();
+    }
+
+    private void BackgroundMovement()
+    {
+        //Properly adjusts the size of the background to the size of the canvass
+        Vector2 size = new Vector2(image.rectTransform.rect.width / 400, 1.5f);
+        image.uvRect = new Rect(image.uvRect.position + new Vector2(speedX, speedY) * Time.deltaTime, size);
     }
 }

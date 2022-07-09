@@ -8,17 +8,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Mode gameMode;
-    public adversaryMode adversaryMode;
+    public playMode adversaryMode;
+
+    public int defMode = 0;
 
     private void Awake()
     {   
         Debug.Log("Game loadedd "+gameMode.name);
 
+        //Used when editor starts in board scene, change defMode to set a new default mode.
         if (gameMode.name == null)
         {
-            //gameMode = ModeManager.GetDefMode();
+            gameMode = ModeManager.GetBaseMode(defMode);
         }
 
+
+        //Game manager stuff xD
         if (!instance)
         {
             instance = this;
@@ -34,7 +39,6 @@ public class GameManager : MonoBehaviour
     public void LoadScene(int sceneBID)
     {
         SceneManager.LoadScene(sceneBID);
-
     }
 
 }

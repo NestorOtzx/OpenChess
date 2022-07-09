@@ -15,7 +15,7 @@ public class Square : MonoBehaviour
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
-        ToggleHighlight(false);
+        SetHighlight(false);
     }
 
     public void SetColor(Color color)
@@ -23,7 +23,7 @@ public class Square : MonoBehaviour
         spr.color = color;
     }
 
-    public void ToggleHighlight(bool t)
+    public void SetHighlight(bool t)
     {
         highlight.SetActive(t);
     }

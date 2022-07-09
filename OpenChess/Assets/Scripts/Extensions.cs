@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 public static class Extensions
 {
     public static T Next<T>(this T src) where T : struct

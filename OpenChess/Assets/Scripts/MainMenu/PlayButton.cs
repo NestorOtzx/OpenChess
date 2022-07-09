@@ -10,8 +10,8 @@ public class PlayButton : MonoBehaviour
    
     public void OnClick()
     {
-        GameManager.instance.adversaryMode = mode.GetAdversaryMode();
-        GameManager.instance.gameMode = mode.GetCurrentMode();
+        GameManager.instance.adversaryMode = mode.GetPlayMode();
+        GameManager.instance.gameMode = mode.GetCurrentGameMode();
         GameManager.instance.LoadScene(1);
     }
 
